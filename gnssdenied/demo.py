@@ -15,9 +15,9 @@ from .metrics import Summary
 from .sim import Config, standard_scenarios
 
 PALETTE = {
-    "paper": "#F6F4EF", "surface": "#FFFFFF", "line": "#DAD6CC", "ink": "#1B1F24", "ink2": "#4A5058",
-    "ink3": "#7A8088", "navy": "#1F3A5F", "steel": "#5B7083", "signal": "#A33A2B", "ochre": "#B8872B",
-    "sage": "#5E7F68",
+    "page": "#F5F7FA", "surface": "#FFFFFF", "line": "#D8DEE6", "ink": "#0E1726", "ink2": "#3D4A5C",
+    "ink3": "#6B7688", "navy": "#0B2545", "steel": "#3E5C76", "brass": "#8A6A1F", "amber": "#B7791F",
+    "teal": "#2F6F73",
 }
 
 
@@ -99,11 +99,11 @@ def write_png(sc: dict, out: str, spoof_start_s: float) -> str:
         "axes.titleweight": "semibold", "axes.titlecolor": c["ink"], "axes.titlelocation": "left",
         "legend.frameon": False, "legend.fontsize": 9,
     })
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8.6), facecolor=c["paper"])
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8.6), facecolor=c["page"])
     fig.subplots_adjust(left=0.07, right=0.98, top=0.855, bottom=0.07, hspace=0.36, wspace=0.18)
     for ax in axes.flat:
         ax.set_facecolor(c["surface"])
-        ax.grid(color="#ECE8E0", linewidth=0.8)
+        ax.grid(color="#E7EBF0", linewidth=0.8)
         ax.set_axisbelow(True)
         for s in ("top", "right"):
             ax.spines[s].set_visible(False)
@@ -125,9 +125,9 @@ def write_png(sc: dict, out: str, spoof_start_s: float) -> str:
     acc = [(x[1], x[2]) for x in g.vpr_log if x[3]]
     rej = [(x[1], x[2]) for x in g.vpr_log if not x[3]]
     if acc:
-        ax.scatter(*zip(*acc), s=10, color=c["sage"], zorder=3, label="VPR fix accepted")
+        ax.scatter(*zip(*acc), s=10, color=c["teal"], zorder=3, label="VPR fix accepted")
     if rej:
-        ax.scatter(*zip(*rej), s=34, marker="x", color=c["signal"], zorder=4, label=f"VPR fix rejected ({len(rej)})")
+        ax.scatter(*zip(*rej), s=34, marker="x", color=c["brass"], zorder=4, label=f"VPR fix rejected ({len(rej)})")
     ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
     ax.set_title("(a) Relative motion plus gated absolute fixes")
@@ -136,7 +136,7 @@ def write_png(sc: dict, out: str, spoof_start_s: float) -> str:
     ax.legend(loc="lower center", ncol=2)
 
     ax = axes[0, 1]
-    for key, col, ls in (("vio_only", c["steel"], "--"), ("vpr_no_gate", c["ochre"], "-"), ("vpr_gated", c["navy"], "-")):
+    for key, col, ls in (("vio_only", c["steel"], "--"), ("vpr_no_gate", c["amber"], "-"), ("vpr_gated", c["navy"], "-")):
         ax.plot(t, [max(e, 0.1) for e in sc[key].errors()], color=col, lw=1.4, ls=ls, label=sc[key].name)
     ax.set_yscale("log")
     ax.set_title("(b) Position error: gating is what makes fixes useful")
@@ -149,12 +149,12 @@ def write_png(sc: dict, out: str, spoof_start_s: float) -> str:
     ax.plot(tx, ty, color=c["ink"], lw=1.2, label="truth")
     sp = [(x[1], x[2]) for x in n.gnss_log if x[4]]
     if sp:
-        ax.plot(*zip(*sp), color=c["signal"], lw=0.9, alpha=0.8, label="spoofed GNSS (carry-off)")
-    ax.plot(*zip(*n.est), color=c["ochre"], lw=1.6, label="EKF, gate only: captured")
+        ax.plot(*zip(*sp), color=c["brass"], lw=0.9, alpha=0.8, label="spoofed GNSS (carry-off)")
+    ax.plot(*zip(*n.est), color=c["amber"], lw=1.6, label="EKF, gate only: captured")
     ax.plot(*zip(*m.est), color=c["navy"], lw=1.6, label="EKF + consistency monitor")
     if m.detection_time_s is not None:
         i = int(round(m.detection_time_s / m.cfg.dt_s))
-        ax.scatter([m.est[i][0]], [m.est[i][1]], s=60, facecolor="none", edgecolor=c["sage"], lw=2, zorder=5,
+        ax.scatter([m.est[i][0]], [m.est[i][1]], s=60, facecolor="none", edgecolor=c["teal"], lw=2, zorder=5,
                    label=f"GNSS flagged, t = {m.detection_time_s:.0f} s")
     ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
@@ -165,13 +165,13 @@ def write_png(sc: dict, out: str, spoof_start_s: float) -> str:
     ax.legend(loc="lower center", ncol=2)
 
     ax = axes[1, 1]
-    ax.plot(t, n.errors(), color=c["ochre"], lw=1.5, label=n.name)
+    ax.plot(t, n.errors(), color=c["amber"], lw=1.5, label=n.name)
     ax.plot(t, m.errors(), color=c["navy"], lw=1.5, label=m.name)
-    ax.axvline(spoof_start_s, color=c["signal"], ls="--", lw=1)
-    ax.text(spoof_start_s, ax.get_ylim()[1] * 0.97, " carry-off starts", color=c["signal"], va="top", fontsize=9)
+    ax.axvline(spoof_start_s, color=c["brass"], ls="--", lw=1)
+    ax.text(spoof_start_s, ax.get_ylim()[1] * 0.97, " carry-off starts", color=c["brass"], va="top", fontsize=9)
     if m.detection_time_s is not None:
-        ax.axvline(m.detection_time_s, color=c["sage"], lw=1.2)
-        ax.text(m.detection_time_s, ax.get_ylim()[1] * 0.85, " flagged", color=c["sage"], va="top", fontsize=9)
+        ax.axvline(m.detection_time_s, color=c["teal"], lw=1.2)
+        ax.text(m.detection_time_s, ax.get_ylim()[1] * 0.85, " flagged", color=c["teal"], va="top", fontsize=9)
     ax.set_title("(d) Error under spoofing")
     ax.set_xlabel("time (s)")
     ax.set_ylabel("error (m)")
@@ -180,10 +180,10 @@ def write_png(sc: dict, out: str, spoof_start_s: float) -> str:
     fig.text(0.07, 0.955, "DARKANALYTICA  ·  SYNTHETIC SIMULATION, SEEDED", color=c["ink3"], fontsize=9,
              family=["IBM Plex Mono", "DejaVu Sans Mono", "monospace"])
     fig.text(0.07, 0.915, "GNSS-denied navigation: drift, absolute fixes, innovation gating and carry-off",
-             color=c["ink"], fontsize=16, weight="semibold", family=["Source Serif 4", "DejaVu Serif", "Georgia", "serif"])
+             color=c["ink"], fontsize=16, weight="semibold", family=["IBM Plex Sans", "DejaVu Sans", "Arial", "sans-serif"])
     os.makedirs(out, exist_ok=True)
     path = os.path.join(out, "gnssdenied_demo.png")
-    fig.savefig(path, dpi=130, facecolor=c["paper"])
+    fig.savefig(path, dpi=130, facecolor=c["page"])
     plt.close(fig)
     return path
 

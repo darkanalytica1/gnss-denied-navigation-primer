@@ -1,9 +1,9 @@
 <p align="center"><img src="assets/banner.svg" alt="GNSS-Denied Navigation Primer" width="100%"></p>
 
 [![tests](https://github.com/darkanalytica1/gnss-denied-navigation-primer/actions/workflows/tests.yml/badge.svg)](https://github.com/darkanalytica1/gnss-denied-navigation-primer/actions/workflows/tests.yml)
-![python](https://img.shields.io/badge/python-3.9%2B-1F3A5F)
-![dependencies](https://img.shields.io/badge/runtime%20dependencies-none-5E7F68)
-![license](https://img.shields.io/badge/license-MIT-7A8088)
+![python](https://img.shields.io/badge/python-3.9%2B-0B2545)
+![dependencies](https://img.shields.io/badge/runtime%20dependencies-none-2F6F73)
+![license](https://img.shields.io/badge/license-MIT-6B7688)
 
 ## What this is
 
