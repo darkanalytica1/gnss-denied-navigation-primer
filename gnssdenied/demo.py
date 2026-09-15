@@ -16,7 +16,7 @@ from .sim import Config, standard_scenarios
 
 PALETTE = {
     "page": "#F5F7FA", "surface": "#FFFFFF", "line": "#D8DEE6", "ink": "#0E1726", "ink2": "#3D4A5C",
-    "ink3": "#6B7688", "navy": "#0B2545", "steel": "#3E5C76", "brass": "#8A6A1F", "amber": "#B7791F",
+    "ink3": "#5F6B7C", "navy": "#0B2545", "steel": "#3E5C76", "brass": "#8A6A1F", "amber": "#B7791F",
     "teal": "#2F6F73",
 }
 
