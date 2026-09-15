@@ -1,0 +1,3 @@
+# gnssdenied has no required runtime dependencies (Python 3.9+ standard library).
+# Optional: the demo draws its figure with matplotlib; without it, the demo writes CSV.
+matplotlib>=3.5
