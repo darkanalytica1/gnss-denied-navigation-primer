@@ -36,7 +36,6 @@
     <marker id="ahn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0B2545"/></marker>
   </defs>
 
-  <!-- edges -->
   <path class="edge" d="M240 135 H316" marker-end="url(#ah)"/>
   <path class="edge" d="M430 170 V246" marker-end="url(#ah)"/>
   <path class="edge" d="M240 315 H316" marker-end="url(#ah)"/>
@@ -49,7 +48,6 @@
   <text x="668" y="200" class="mono" font-size="12" fill="#2F6F73">inside gate</text>
   <text x="668" y="430" class="mono" font-size="12" fill="#8A6A1F">outside gate</text>
 
-  <!-- nodes -->
   <rect class="node" x="40" y="100" width="200" height="70" rx="4"/>
   <text x="56" y="128" class="sans" font-size="15" font-weight="600" fill="#0E1726">VIO / IMU</text>
   <text x="56" y="150" class="sans" font-size="12.5" fill="#3D4A5C">relative motion: smooth, drifts</text>
@@ -78,11 +76,9 @@
   <text x="796" y="458" class="sans" font-size="15" font-weight="600" fill="#0E1726">Reject and log</text>
   <text x="796" y="480" class="sans" font-size="12.5" fill="#3D4A5C">estimate coasts on VIO</text>
 
-  <!-- tokens: start at the fix node edge (240, 315) -->
   <circle class="tok1" cx="240" cy="315" r="7" fill="#2F6F73"/>
   <circle class="tok2" cx="240" cy="315" r="7" fill="#8A6A1F"/>
 
-  <!-- inset: the gate in the innovation plane, 1 px = 1 m -->
   <rect x="40" y="388" width="520" height="140" rx="4" fill="#F5F7FA" stroke="#D8DEE6"/>
   <text x="56" y="410" class="mono" font-size="11" letter-spacing="1" fill="#5F6B7C">INNOVATION PLANE · S = diag(15², 15²) m² · 1 px = 1 m</text>
   <line x1="80" y1="470" x2="200" y2="470" stroke="#D8DEE6"/>
